@@ -1,7 +1,10 @@
+// Flutter imports:
+import 'package:flash_chat/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});
+  static const String id = '/register';
 
   @override
   RegistrationScreenState createState() => RegistrationScreenState();
@@ -18,9 +21,17 @@ class RegistrationScreenState extends State<RegistrationScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            SizedBox(
-              height: 200.0,
-              child: Image.asset('images/logo.png'),
+            const Hero(
+              tag: kLogoHeroTag,
+              child: SizedBox(
+                height: 200.0,
+                child: Image(
+                  image: ResizeImage(
+                    AssetImage('images/logo.png'),
+                    height: 200,
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               height: 48.0,
