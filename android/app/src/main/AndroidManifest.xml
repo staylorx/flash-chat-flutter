@@ -1,9 +1,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flash_chat">
-   <application
+    package="com.taybiz.flash_chat">
+    <!-- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> -->
+    <application
         android:label="flash_chat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <!-- for appwrite.io -->
+        <!-- <activity android:name="com.linusu.flutter_web_auth_2.CallbackActivity" >
+            <intent-filter android:label="flutter_web_auth_2">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="appwrite-callback-[PROJECT_ID]" />
+            </intent-filter>
+        </activity> -->
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"

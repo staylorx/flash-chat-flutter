@@ -2,31 +2,35 @@
 import 'dart:io' as io;
 
 // Flutter imports:
-import 'package:flash_chat/screens/chat_screen.dart';
-import 'package:flash_chat/screens/login_screen.dart';
-import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 
 // Project imports:
+import 'package:flash_chat/screens/chat_screen.dart';
+import 'package:flash_chat/screens/login_screen.dart';
+import 'package:flash_chat/screens/registration_screen.dart';
 import 'package:flash_chat/screens/welcome_screen.dart';
 import 'package:flash_chat/utilities/log_printer.dart';
 
 final logger = Logger(printer: MyLogfmtPrinter('main'));
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   if (kDebugMode) {
-    Logger.level = Level.debug;
+    //Logger.level = Level.debug;
     String fileName = '.env.dev';
     logger.d('main: Setting development mode with $fileName');
 
     await _openEnvFile(fileName: fileName);
   } else {
-    Logger.level = Level.info;
+    //Logger.level = Level.info;
     String fileName = '.env.prod';
     logger.d('main: Setting production mode with $fileName');
 
@@ -38,8 +42,8 @@ void main() async {
 
 Future<void> _openEnvFile({required String fileName}) async {
   //check for file
-  var fileExists = await io.File(fileName).exists();
-  if (fileExists) {
+  if (await io.File(fileName).exists()) {
+    logger.d('loading $fileName');
     await dotenv.load(fileName: fileName);
   } else {
     logger.w('$fileName file does not exist... skipping.');
@@ -52,11 +56,6 @@ class FlashChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        textTheme: const TextTheme(
-          bodyText1: TextStyle(color: Colors.black54),
-        ),
-      ),
       initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => const WelcomeScreen(),
